@@ -3,13 +3,20 @@ import Link from "next/link";
 import { useState } from "react";
 
 export const RegisterForm = () => {
-    const [user, setUser] = useState({ name: "", email: "", country_residency: "united States", country_living: "united States", password: "", phone: "" });
+    const [user, setUser] = useState({ name: "", email: "", password: "" });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        console.log("submitting");
+        if (user) {
+            const response = await fetch('/api/auth/register', {
+                method: "POST",
+                body: JSON.stringify(user)
+            });
+            return response;
+        }
+        return null;
     }
+
 
     return (
         <div>
